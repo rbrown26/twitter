@@ -4,6 +4,7 @@ import '../App.css';
 import Header from './Header';
 import ConnectionsCounter from './ConnectionsCounter';
 import Tweet from './Tweet';
+import MainNav from './MainNav';
 import AddTweetForm from './AddTweetForm';
 
 class Profile extends Component {
@@ -46,8 +47,21 @@ class Profile extends Component {
     return (
       <div class="App">
         <Header />
+        <MainNav />
         <AddTweetForm />
         <div class="main">
+          <div>
+            <h2> My Tweets </h2>
+          </div>
+          <div>
+            {/* User tweets */}
+            {this.state.userTweets.map( (tweet, index) =>
+              <Tweet
+                message={tweet.message}
+                id={tweet.id}
+              />
+            )}
+          </div>
           <div>
             <h2>Tweetster Feed</h2>
           </div>
@@ -61,18 +75,7 @@ class Profile extends Component {
             )}
           </div>
 
-          <div>
-            <h2> My Tweets </h2>
-          </div>
-          <div>
-            {/* User tweets */}
-            {this.state.userTweets.map( (tweet, index) =>
-              <Tweet
-                message={tweet.message}
-                id={tweet.id}
-              />
-            )}
-          </div>
+
           <ConnectionsCounter
             following={3}
             followers={2}

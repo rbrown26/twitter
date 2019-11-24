@@ -5,21 +5,21 @@ export const userService = {
 };
 
 function login(username, password) {
+    console.log('in login');
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })
     };
-    return fetch(`urlHereForApp`, requestOptions)
+    console.log('built my request options');
+
+    return fetch(`https://polar-everglades-29406.herokuapp.com/auth/authenticate`, requestOptions)
+    //return fetch(`http://localhost:8080/auth/authenticate`, requestOptions)
         .then(handleResponse)
         .then(user => {
             if (user) {
                 user.authdata = window.btoa(username + ':' + password);
                 localStorage.setItem('user', JSON.stringify(user));
-
-                if (user.userRole === 'ADMIN') {
-                    localStorage.setItem('userToken', user.token);
-                }
             }
 
             return user;
@@ -36,12 +36,12 @@ function registerUser(username, password) {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
         },
         body: JSON.stringify({ username, password })
     };
 
-    return fetch(`urlHereForApp`, requestOptions)
+    return fetch(`https://polar-everglades-29406.herokuapp.com/auth/register`, requestOptions)
+    //return fetch(`http://localhost:8080/auth/register`, requestOptions)
         .then(handleResponse)
         .then(user => {
             if (user) {
